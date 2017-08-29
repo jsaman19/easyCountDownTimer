@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="EasyCountDownTextview">
+        <attr name="hours" format="integer" />
+        <attr name="minute" format="integer" />
+        <attr name="second" format="integer" />
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="showHours" format="boolean" />
+        <attr name="colonColor" format="color"/>
+        <attr name="digitBackground" format="reference|color"/>
+        <attr name="setAnimation" format="boolean"/>
+    </declare-styleable>
+
+</resources>

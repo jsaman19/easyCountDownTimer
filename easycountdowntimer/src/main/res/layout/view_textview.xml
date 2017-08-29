@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/hours_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/below_hours_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"/>
+
+        <TextView
+            android:id="@+id/top_hours_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"/>
+
+        <TextView
+            android:id="@+id/hours_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:visibility="gone"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/colon1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" : "/>
+
+    <RelativeLayout
+        android:id="@+id/minute_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/below_minute_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"/>
+
+        <TextView
+            android:id="@+id/top_minute_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"/>
+
+        <TextView
+            android:id="@+id/minute_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:visibility="gone"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/colon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" : "/>
+
+    <RelativeLayout
+        android:id="@+id/second_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/below_second_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"/>
+
+        <TextView
+            android:id="@+id/top_second_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"/>
+
+        <TextView
+            android:id="@+id/second_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:visibility="gone"
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
