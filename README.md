@@ -1,10 +1,15 @@
 # easyCountDownTimer
 A simple android library to countdown timer textview for api 14+
 
-##Setup
+## Setup
+
 The simplest way to use easyCountDownTimer is to add the library as aar dependency to your build.
 
-####Maven
+## Screan shot
+
+![screan_shot](https://user-images.githubusercontent.com/6823491/30234511-0261af9c-9513-11e7-964b-b0f6c45f6261.gif)
+
+#### Maven
 
 ```
 <dependency>
@@ -15,7 +20,7 @@ The simplest way to use easyCountDownTimer is to add the library as aar dependen
 </dependency>
 ```
 
-####Gradle
+#### Gradle
 
 ```
 repositories {
@@ -29,7 +34,7 @@ dependencies {
 }
 ```
 
-####Usage
+#### Usage
 
 Add the following code to your view
 
