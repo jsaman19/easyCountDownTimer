@@ -78,12 +78,14 @@ public class EasyCountDownTextview extends LinearLayout {
             countDownInterface = new CountDownInterface() {
                 @Override
                 public void onTick(long time) {
-                    newCountDownInterface.onTick(time);
+                    if (newCountDownInterface != null)
+                        newCountDownInterface.onTick(time);
                 }
 
                 @Override
                 public void onFinish() {
-                    newCountDownInterface.onFinish();
+                    if (newCountDownInterface != null)
+                        newCountDownInterface.onFinish();
                 }
             };
         }
@@ -92,7 +94,7 @@ public class EasyCountDownTextview extends LinearLayout {
                 countDownInterface);
         myCountDown.start();
 
-        if(setAnim) {
+        if (setAnim) {
             hoursTxt.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -180,8 +182,7 @@ public class EasyCountDownTextview extends LinearLayout {
 
                 }
             });
-        }
-        else {
+        } else {
             hoursTxt.setVisibility(VISIBLE);
             minuteTxt.setVisibility(VISIBLE);
             secondTxt.setVisibility(VISIBLE);
@@ -193,7 +194,7 @@ public class EasyCountDownTextview extends LinearLayout {
         setTextColor(color);
         setColonColor(colonColor);
         setShowHours(showHours);
-        if(digitBackgroundResource > 0)
+        if (digitBackgroundResource > 0)
             setDigitBackgroundResource(digitBackgroundResource);
         else
             setDigitBackgroundColor(digitBackgroundColor);
@@ -269,8 +270,7 @@ public class EasyCountDownTextview extends LinearLayout {
         belowSecondTxt.setBackgroundResource(resId);
     }
 
-    public void setOnTick(CountDownInterface countDownInterface)
-    {
+    public void setOnTick(CountDownInterface countDownInterface) {
         this.newCountDownInterface = countDownInterface;
     }
 }
