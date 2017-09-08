@@ -1,13 +1,13 @@
 # easyCountDownTimer
 A simple android library to countdown timer textview for api 14+
 
-## Setup
-
-The simplest way to use easyCountDownTimer is to add the library as aar dependency to your build.
-
 ## Screan shot
 
 ![screan_shot](https://user-images.githubusercontent.com/6823491/30234511-0261af9c-9513-11e7-964b-b0f6c45f6261.gif)
+
+## Setup
+
+The simplest way to use easyCountDownTimer is to add the library as aar dependency to your build.
 
 #### Maven
 
@@ -61,12 +61,12 @@ EasyCountDownTextview countDownTextview = (EasyCountDownTextview) findViewById(R
 countDownTextview.setOnTick(new CountDownInterface() {
             @Override
             public void onTick(long time) {
-                Log.i("sdds", "sdsd");
+                Log.i("main activty", "onTick");
             }
 
             @Override
             public void onFinish() {
-                Log.i("sdds", "sdsd");
+                Log.i("main activity", "onFinish");
             }
         });
 ```
