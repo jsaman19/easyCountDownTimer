@@ -11,6 +11,7 @@
         <attr name="colonColor" format="color"/>
         <attr name="digitBackground" format="reference|color"/>
         <attr name="setAnimation" format="boolean"/>
+        <attr name="showOnlySecond" format="boolean"/>
     </declare-styleable>
 
 </resources>

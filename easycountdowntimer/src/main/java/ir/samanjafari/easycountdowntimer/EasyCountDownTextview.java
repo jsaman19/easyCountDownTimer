@@ -24,6 +24,8 @@ public class EasyCountDownTextview extends LinearLayout {
     private TextView topHoursTxt, belowHoursTxt, hoursTxt, belowMinuteTxt, topMinuteTxt, minuteTxt, secondTxt, belowSecondTxt, topSecondTxt, colon1, colon2;
     private RelativeLayout hrLayout, minLayout, secLayout;
     private CountDownInterface countDownInterface, newCountDownInterface;
+    private int hours, minute, second;
+    private MyCountDown myCountDown;
 
     public EasyCountDownTextview(Context context) {
         this(context, null, 0);
@@ -68,11 +70,13 @@ public class EasyCountDownTextview extends LinearLayout {
         int colonColor = attr.getColor(R.styleable.EasyCountDownTextview_colonColor, 0xff000000);
         int digitBackgroundColor = -1;
         int digitBackgroundResource = attr.getResourceId(R.styleable.EasyCountDownTextview_digitBackground, -1);
+
         if (digitBackgroundResource <= 0)
             digitBackgroundColor = attr.getColor(R.styleable.EasyCountDownTextview_digitBackground, -1);
-        boolean setAnim = attr.getBoolean(R.styleable.EasyCountDownTextview_setAnimation, false);
 
-        long millisin = (hours * 3600000) + (minute * 60000) + (second * 1000);
+        boolean setAnim = attr.getBoolean(R.styleable.EasyCountDownTextview_setAnimation, false);
+        boolean isOnlySecond = attr.getBoolean(R.styleable.EasyCountDownTextview_showOnlySecond, false);
+
 
         if (countDownInterface == null) {
             countDownInterface = new CountDownInterface() {
@@ -90,9 +94,6 @@ public class EasyCountDownTextview extends LinearLayout {
             };
         }
 
-        MyCountDown myCountDown = new MyCountDown(millisin, 1000, hoursTxt, minuteTxt, secondTxt,
-                countDownInterface);
-        myCountDown.start();
 
         if (setAnim) {
             hoursTxt.addTextChangedListener(new TextWatcher() {
@@ -194,10 +195,14 @@ public class EasyCountDownTextview extends LinearLayout {
         setTextColor(color);
         setColonColor(colonColor);
         setShowHours(showHours);
+        showOnlySecond(isOnlySecond);
+
         if (digitBackgroundResource > 0)
             setDigitBackgroundResource(digitBackgroundResource);
         else
             setDigitBackgroundColor(digitBackgroundColor);
+
+        setTime(hours, minute, second);
     }
 
     public void setTextColor(int color) {
@@ -241,6 +246,36 @@ public class EasyCountDownTextview extends LinearLayout {
         }
     }
 
+    public void showOnlySecond(boolean onlySecond) {
+        if (onlySecond) {
+            this.minute = 0;
+            this.hours = 0;
+            hoursTxt.setVisibility(GONE);
+            minuteTxt.setVisibility(GONE);
+
+            topHoursTxt.setVisibility(GONE);
+            topMinuteTxt.setVisibility(GONE);
+
+            belowHoursTxt.setVisibility(GONE);
+            belowMinuteTxt.setVisibility(GONE);
+
+            colon1.setVisibility(GONE);
+            colon2.setVisibility(GONE);
+        } else {
+            hoursTxt.setVisibility(VISIBLE);
+            minuteTxt.setVisibility(VISIBLE);
+
+            topHoursTxt.setVisibility(VISIBLE);
+            topMinuteTxt.setVisibility(VISIBLE);
+
+            belowHoursTxt.setVisibility(VISIBLE);
+            belowMinuteTxt.setVisibility(VISIBLE);
+
+            colon1.setVisibility(VISIBLE);
+            colon2.setVisibility(VISIBLE);
+        }
+    }
+
     public void setColonColor(int color) {
         colon1.setTextColor(color);
         colon2.setTextColor(color);
@@ -272,5 +307,42 @@ public class EasyCountDownTextview extends LinearLayout {
 
     public void setOnTick(CountDownInterface countDownInterface) {
         this.newCountDownInterface = countDownInterface;
+    }
+
+    public void startTimer()
+    {
+        stopTimer();
+
+        if(minute > 59)
+            minute = 59;
+
+        if(second > 59)
+            second = 59;
+
+        long millisin = (hours * 3600000) + (minute * 60000) + (second * 1000);
+
+        if(millisin > 0) {
+            myCountDown = new MyCountDown(millisin, 1000, hoursTxt, minuteTxt, secondTxt,
+                    countDownInterface);
+            myCountDown.start();
+        }
+    }
+
+    public void stopTimer()
+    {
+        if(myCountDown != null)
+        {
+            myCountDown.cancel();
+            myCountDown = null;
+        }
+    }
+
+    public void setTime(int hours, int minute, int second)
+    {
+        this.hours = hours;
+        this.minute = minute;
+        this.second = second;
+
+        startTimer();
     }
 }

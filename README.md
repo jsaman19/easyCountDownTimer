@@ -15,7 +15,7 @@ The simplest way to use easyCountDownTimer is to add the library as aar dependen
 <dependency>
   <groupId>ir.samanjafari.easycountdowntimer</groupId>
   <artifactId>easycountdowntimer</artifactId>
-  <version>1.1</version>
+  <version>2.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -30,7 +30,7 @@ repositories {
 }
 
 dependencies {
-    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:1.1'
+    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.0'
 }
 ```
 
@@ -51,6 +51,7 @@ Add the following code to your view
         app:textSize="25sp"
         app:textColor="#000"
         app:setAnimation="true"
+        app:showOnlySecond="false"
         />
 ```
 
@@ -70,6 +71,34 @@ countDownTextview.setOnTick(new CountDownInterface() {
             }
         });
 ```
+how to set time programmatically ?
+
+```java
+EasyCountDownTextview easyCountDownTextview = (EasyCountDownTextview) findViewById(R.id.easyCountDownTextview);
+easyCountDownTextview.setTime(1, 30, 15);// setTime(hours, minute, second)
+```
+
+## Licence
+
+Copyright 2016 Saeed Shahini
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+## Author
+
+Saman Jafari
+
+email: saman.jafari69@gmail.com
+
+github: https://github.com/jsaman19
+
+site : http://samanjafari.ir
+
+
 
 
 
