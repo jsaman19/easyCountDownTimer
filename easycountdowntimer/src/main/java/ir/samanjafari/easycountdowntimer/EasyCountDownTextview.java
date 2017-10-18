@@ -26,6 +26,7 @@ public class EasyCountDownTextview extends LinearLayout {
     private CountDownInterface countDownInterface, newCountDownInterface;
     private int hours, minute, second;
     private MyCountDown myCountDown;
+    private boolean setAnim;
 
     public EasyCountDownTextview(Context context) {
         this(context, null, 0);
@@ -74,9 +75,17 @@ public class EasyCountDownTextview extends LinearLayout {
         if (digitBackgroundResource <= 0)
             digitBackgroundColor = attr.getColor(R.styleable.EasyCountDownTextview_digitBackground, -1);
 
-        boolean setAnim = attr.getBoolean(R.styleable.EasyCountDownTextview_setAnimation, false);
+        setAnim = attr.getBoolean(R.styleable.EasyCountDownTextview_setAnimation, false);
         boolean isOnlySecond = attr.getBoolean(R.styleable.EasyCountDownTextview_showOnlySecond, false);
 
+        if(!showHours)
+            hours = 0;
+
+        if(isOnlySecond) {
+            showHours = false;
+            hours = 0;
+            minute = 0;
+        }
 
         if (countDownInterface == null) {
             countDownInterface = new CountDownInterface() {
@@ -95,107 +104,15 @@ public class EasyCountDownTextview extends LinearLayout {
         }
 
 
-        if (setAnim) {
-            hoursTxt.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    Log.i("sddsf", charSequence.toString());
-
-                    int digit = Integer.parseInt(charSequence.toString());
-                    int newDigit = digit + 1;
-
-                    topHoursTxt.setText(String.valueOf(newDigit));
-                    belowHoursTxt.setText(String.valueOf(digit));
-
-                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
-                    Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
-                    topHoursTxt.startAnimation(animation);
-                    belowHoursTxt.startAnimation(animation1);
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });
-
-            secondTxt.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    int digit = Integer.parseInt(charSequence.toString());
-                    int newDigit = 59;
-                    if (digit > 0)
-                        newDigit = digit - 1;
-
-                    topSecondTxt.setText(String.valueOf(digit));
-                    belowSecondTxt.setText(String.valueOf(newDigit));
-
-                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
-                    Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
-                    topSecondTxt.startAnimation(animation);
-                    belowSecondTxt.startAnimation(animation1);
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    Log.i("sddsf", charSequence.toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                }
-            });
-
-            minuteTxt.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    Log.i("sddsf", charSequence.toString());
-
-                    int digit = Integer.parseInt(charSequence.toString());
-                    int newDigit = 0;
-                    if (digit != 59)
-                        newDigit = digit + 1;
-
-                    topMinuteTxt.setText(String.valueOf(newDigit));
-                    belowMinuteTxt.setText(String.valueOf(digit));
-
-                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
-                    Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
-                    topMinuteTxt.startAnimation(animation);
-                    belowMinuteTxt.startAnimation(animation1);
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });
-        } else {
-            hoursTxt.setVisibility(VISIBLE);
-            minuteTxt.setVisibility(VISIBLE);
-            secondTxt.setVisibility(VISIBLE);
-        }
+        setAnimation(setAnim, context);
 
         if (size > 0)
             setTextSize(size);
 
         setTextColor(color);
         setColonColor(colonColor);
-        setShowHours(showHours);
         showOnlySecond(isOnlySecond);
+        setShowHours(showHours);
 
         if (digitBackgroundResource > 0)
             setDigitBackgroundResource(digitBackgroundResource);
@@ -240,8 +157,10 @@ public class EasyCountDownTextview extends LinearLayout {
             colon1.setVisibility(GONE);
         } else {
             hoursTxt.setVisibility(VISIBLE);
-            topHoursTxt.setVisibility(VISIBLE);
-            belowHoursTxt.setVisibility(VISIBLE);
+            if(setAnim) {
+                topHoursTxt.setVisibility(VISIBLE);
+                belowHoursTxt.setVisibility(VISIBLE);
+            }
             colon1.setVisibility(VISIBLE);
         }
     }
@@ -265,11 +184,13 @@ public class EasyCountDownTextview extends LinearLayout {
             hoursTxt.setVisibility(VISIBLE);
             minuteTxt.setVisibility(VISIBLE);
 
-            topHoursTxt.setVisibility(VISIBLE);
-            topMinuteTxt.setVisibility(VISIBLE);
+            if(setAnim) {
+                topHoursTxt.setVisibility(VISIBLE);
+                belowHoursTxt.setVisibility(VISIBLE);
 
-            belowHoursTxt.setVisibility(VISIBLE);
-            belowMinuteTxt.setVisibility(VISIBLE);
+                topMinuteTxt.setVisibility(VISIBLE);
+                belowMinuteTxt.setVisibility(VISIBLE);
+            }
 
             colon1.setVisibility(VISIBLE);
             colon2.setVisibility(VISIBLE);
@@ -344,5 +265,124 @@ public class EasyCountDownTextview extends LinearLayout {
         this.second = second;
 
         startTimer();
+    }
+
+    public void setAnimation(boolean anim, final Context context)
+    {
+        hoursTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.i("sddsf", charSequence.toString());
+
+                int digit = Integer.parseInt(charSequence.toString());
+                int newDigit = digit + 1;
+
+                topHoursTxt.setText(String.valueOf(newDigit));
+                belowHoursTxt.setText(String.valueOf(digit));
+
+                Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
+                Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
+                topHoursTxt.startAnimation(animation);
+                belowHoursTxt.startAnimation(animation1);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        secondTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                int digit = Integer.parseInt(charSequence.toString());
+                int newDigit = 59;
+                if (digit > 0)
+                    newDigit = digit - 1;
+
+                topSecondTxt.setText(String.valueOf(digit));
+                belowSecondTxt.setText(String.valueOf(newDigit));
+
+                Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
+                Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
+                topSecondTxt.startAnimation(animation);
+                belowSecondTxt.startAnimation(animation1);
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.i("sddsf", charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        minuteTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.i("sddsf", charSequence.toString());
+
+                int digit = Integer.parseInt(charSequence.toString());
+                int newDigit = 0;
+                if (digit != 59)
+                    newDigit = digit + 1;
+
+                topMinuteTxt.setText(String.valueOf(newDigit));
+                belowMinuteTxt.setText(String.valueOf(digit));
+
+                Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
+                Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
+                topMinuteTxt.startAnimation(animation);
+                belowMinuteTxt.startAnimation(animation1);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        if(anim)
+        {
+            hoursTxt.setVisibility(GONE);
+            minuteTxt.setVisibility(GONE);
+            secondTxt.setVisibility(GONE);
+
+            topHoursTxt.setVisibility(VISIBLE);
+            topMinuteTxt.setVisibility(VISIBLE);
+            topSecondTxt.setVisibility(VISIBLE);
+
+            belowHoursTxt.setVisibility(VISIBLE);
+            belowMinuteTxt.setVisibility(VISIBLE);
+            belowSecondTxt.setVisibility(VISIBLE);
+        }
+        else {
+            hoursTxt.setVisibility(VISIBLE);
+            minuteTxt.setVisibility(VISIBLE);
+            secondTxt.setVisibility(VISIBLE);
+
+            topHoursTxt.setVisibility(GONE);
+            topMinuteTxt.setVisibility(GONE);
+            topSecondTxt.setVisibility(GONE);
+
+            belowHoursTxt.setVisibility(GONE);
+            belowMinuteTxt.setVisibility(GONE);
+            belowSecondTxt.setVisibility(GONE);
+        }
     }
 }

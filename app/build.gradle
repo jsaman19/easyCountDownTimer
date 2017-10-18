@@ -7,8 +7,8 @@ android {
         applicationId "ir.samanjafari.testmylibraries"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

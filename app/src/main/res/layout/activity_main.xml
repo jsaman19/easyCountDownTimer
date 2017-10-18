@@ -11,14 +11,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:hours="2"
-        app:minute="2"
-        app:second="15"
+        app:hours="0"
+        app:minute="3"
+        app:second="0"
         app:showHours="false"
         app:textSize="25sp"
-        app:digitBackground="@drawable/shape"
-        app:textColor="#fff"
+        app:digitBackground="@android:color/transparent"
+        app:textColor="#9c9c9c"
         app:setAnimation="false"
+        app:colonColor="#000"
         />
 
 </RelativeLayout>
