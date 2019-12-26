@@ -6,7 +6,9 @@
     <RelativeLayout
         android:id="@+id/hours_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/below_hours_txt"
@@ -39,12 +41,16 @@
         android:id="@+id/colon1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:text=" : "/>
 
     <RelativeLayout
         android:id="@+id/minute_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         >
 
         <TextView
@@ -78,12 +84,16 @@
         android:id="@+id/colon2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:text=" : "/>
 
     <RelativeLayout
         android:id="@+id/second_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/below_second_txt"

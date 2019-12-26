@@ -42,24 +42,23 @@ public class EasyCountDownTextview extends LinearLayout {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        assert inflater != null;
         View view = inflater.inflate(R.layout.view_textview, this);
-        hoursTxt = (TextView) view.findViewById(R.id.hours_txt);
-        belowHoursTxt = (TextView) view.findViewById(R.id.below_hours_txt);
-        topHoursTxt = (TextView) view.findViewById(R.id.top_hours_txt);
-        minuteTxt = (TextView) view.findViewById(R.id.minute_txt);
-        belowMinuteTxt = (TextView) view.findViewById(R.id.below_minute_txt);
-        topMinuteTxt = (TextView) view.findViewById(R.id.top_minute_txt);
-        secondTxt = (TextView) view.findViewById(R.id.second_txt);
-        belowSecondTxt = (TextView) view.findViewById(R.id.below_second_txt);
-        topSecondTxt = (TextView) view.findViewById(R.id.top_second_txt);
-        colon1 = (TextView) view.findViewById(R.id.colon1);
-        colon2 = (TextView) view.findViewById(R.id.colon2);
-        hrLayout = (RelativeLayout) view.findViewById(R.id.hours_layout);
-        minLayout = (RelativeLayout) view.findViewById(R.id.minute_layout);
-        secLayout = (RelativeLayout) view.findViewById(R.id.second_layout);
+        hoursTxt = view.findViewById(R.id.hours_txt);
+        belowHoursTxt = view.findViewById(R.id.below_hours_txt);
+        topHoursTxt = view.findViewById(R.id.top_hours_txt);
+        minuteTxt = view.findViewById(R.id.minute_txt);
+        belowMinuteTxt = view.findViewById(R.id.below_minute_txt);
+        topMinuteTxt = view.findViewById(R.id.top_minute_txt);
+        secondTxt = view.findViewById(R.id.second_txt);
+        belowSecondTxt = view.findViewById(R.id.below_second_txt);
+        topSecondTxt = view.findViewById(R.id.top_second_txt);
+        colon1 = view.findViewById(R.id.colon1);
+        colon2 = view.findViewById(R.id.colon2);
+        hrLayout = view.findViewById(R.id.hours_layout);
+        minLayout = view.findViewById(R.id.minute_layout);
+        secLayout = view.findViewById(R.id.second_layout);
 
-
-        this.countDownInterface = countDownInterface;
 
         TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.EasyCountDownTextview, 0, 0);
 

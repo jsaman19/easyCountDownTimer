@@ -54,11 +54,11 @@ public class MyCountDown extends CountDownTimer {
         String hr = hrTxt.getText().toString().trim();
         String hr2 = String.valueOf(hours);
         if (!hr.equals(hr2))
-            hrTxt.setText(String.valueOf(hours));
+            hrTxt.setText(String.valueOf(hours).length() == 1 ? "0" + hours : String.valueOf(hours));
 
         if (!minTxt.getText().toString().trim().equals(String.valueOf(min)))
-            minTxt.setText(String.valueOf(min));
+            minTxt.setText(String.valueOf(min).length() == 1 ? "0" + min : String.valueOf(min));
 
-        scndTxt.setText(String.valueOf(second));
+        scndTxt.setText(String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
     }
 }
