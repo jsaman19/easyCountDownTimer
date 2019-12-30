@@ -5,6 +5,8 @@ A simple android library to countdown timer textview for api 14+
 
 ![screan_shot](https://user-images.githubusercontent.com/6823491/30234511-0261af9c-9513-11e7-964b-b0f6c45f6261.gif)
 
+![screan_shot](screenshots/Screenshot_20191230-190735.png)
+
 ## Setup
 
 The simplest way to use easyCountDownTimer is to add the library as aar dependency to your build.
@@ -15,7 +17,7 @@ The simplest way to use easyCountDownTimer is to add the library as aar dependen
 <dependency>
   <groupId>ir.samanjafari.easycountdowntimer</groupId>
   <artifactId>easycountdowntimer</artifactId>
-  <version>2.1</version>
+  <version>2.2.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -30,7 +32,7 @@ repositories {
 }
 
 dependencies {
-    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.1'
+    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.2.0'
 }
 ```
 
@@ -44,14 +46,18 @@ Add the following code to your view
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:hours="2"
-        app:minute="2"
-        app:second="15"
-        app:showHours="false"
-        app:textSize="25sp"
-        app:textColor="#000"
+        app:hours="0"
+        app:minute="1"
+        app:second="10"
+        app:showHours="true"
+        app:textSize="12sp"
+        app:digitBackground="@android:color/transparent"
+        app:textColor="#9c9c9c"
         app:setAnimation="true"
-        app:showOnlySecond="false"
+        app:colonColor="#000"
+        app:showDays="true"
+        app:daysLabel="D"
+        app:days="1"
         />
 ```
 
@@ -59,15 +65,16 @@ whit the following code you can listen to onFinish or onTick timer
 
 ```java
 EasyCountDownTextview countDownTextview = (EasyCountDownTextview) findViewById(R.id.easyCountDownTextview);
-countDownTextview.setOnTick(new CountDownInterface() {
+easyCountDownTextview.setTime(1, 1, 1, 1);
+        easyCountDownTextview.setOnTick(new CountDownInterface() {
             @Override
             public void onTick(long time) {
-                Log.i("main activty", "onTick");
+                
             }
 
             @Override
             public void onFinish() {
-                Log.i("main activity", "onFinish");
+
             }
         });
 ```
@@ -75,7 +82,7 @@ how to set time programmatically ?
 
 ```java
 EasyCountDownTextview easyCountDownTextview = (EasyCountDownTextview) findViewById(R.id.easyCountDownTextview);
-easyCountDownTextview.setTime(1, 30, 15);// setTime(hours, minute, second)
+easyCountDownTextview.setTime(1,1, 30, 15);// setTime(hours, minute, second)
 ```
 
 ## Licence

@@ -12,14 +12,17 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:hours="0"
-        app:minute="3"
-        app:second="0"
-        app:showHours="false"
-        app:textSize="25sp"
+        app:minute="1"
+        app:second="10"
+        app:showHours="true"
+        app:textSize="12sp"
         app:digitBackground="@android:color/transparent"
         app:textColor="#9c9c9c"
-        app:setAnimation="false"
+        app:setAnimation="true"
         app:colonColor="#000"
+        app:showDays="true"
+        app:daysLabel="D"
+        app:days="1"
         />
 
 </RelativeLayout>

@@ -4,11 +4,27 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import ir.samanjafari.easycountdowntimer.CountDownInterface;
+import ir.samanjafari.easycountdowntimer.EasyCountDownTextview;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EasyCountDownTextview easyCountDownTextview = new EasyCountDownTextview(this);
+        easyCountDownTextview.setTime(1, 1, 1, 1);
+        easyCountDownTextview.setOnTick(new CountDownInterface() {
+            @Override
+            public void onTick(long time) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
 }
