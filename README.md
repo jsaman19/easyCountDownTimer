@@ -17,7 +17,7 @@ The simplest way to use easyCountDownTimer is to add the library as aar dependen
 <dependency>
   <groupId>ir.samanjafari.easycountdowntimer</groupId>
   <artifactId>easycountdowntimer</artifactId>
-  <version>2.2.0</version>
+  <version>2.2.1</version>
   <type>pom</type>
 </dependency>
 ```
@@ -32,7 +32,7 @@ repositories {
 }
 
 dependencies {
-    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.2.0'
+    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.2.1'
 }
 ```
 
