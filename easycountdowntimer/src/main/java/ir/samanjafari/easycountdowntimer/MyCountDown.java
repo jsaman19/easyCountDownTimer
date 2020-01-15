@@ -74,7 +74,7 @@ public class MyCountDown extends CountDownTimer {
             minute = (int) (time / minMilSec);
             second = (int) ((time % minMilSec) / secMilSec);
         } else {
-            second = (int) (time / minMilSec);
+            second = (int) (time / secMilSec);
         }
 
         if(d != days)
