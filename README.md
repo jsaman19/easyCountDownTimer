@@ -82,7 +82,7 @@ how to set time programmatically ?
 
 ```java
 EasyCountDownTextview easyCountDownTextview = (EasyCountDownTextview) findViewById(R.id.easyCountDownTextview);
-easyCountDownTextview.setTime(1,1, 30, 15);// setTime(hours, minute, second)
+easyCountDownTextview.setTime(1,1, 30, 15);// setTime(days, hours, minute, second)
 ```
 
 ## Licence
