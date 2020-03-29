@@ -8,7 +8,7 @@
 
     <ir.samanjafari.easycountdowntimer.EasyCountDownTextview
         android:id="@+id/easyCountDownTextview"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:textSize="12sp"
@@ -22,7 +22,6 @@
         app:second="30"
         app:start_automatically="false"
         />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
