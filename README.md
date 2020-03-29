@@ -58,6 +58,7 @@ Add the following code to your view
         app:showDays="true"
         app:daysLabel="D"
         app:days="1"
+        app:start_automatically="false"
         />
 ```
 
