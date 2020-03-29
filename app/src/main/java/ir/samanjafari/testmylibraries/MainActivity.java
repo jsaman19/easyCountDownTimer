@@ -13,18 +13,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        EasyCountDownTextview easyCountDownTextview = findViewById(R.id.easyCountDownTextview);
-        easyCountDownTextview.setTime(0, 0, 1, 0);
-        easyCountDownTextview.setOnTick(new CountDownInterface() {
-            @Override
-            public void onTick(long time) {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        });
+//        EasyCountDownTextview easyCountDownTextview = findViewById(R.id.easyCountDownTextview);
+//        easyCountDownTextview.setTime(0, 0, 1, 0);
+//        easyCountDownTextview.setOnTick(new CountDownInterface() {
+//            @Override
+//            public void onTick(long time) {
+//
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//        });
     }
 }

@@ -17,6 +17,7 @@
         app:setAnimation="true"
         app:colonColor="#000"
         app:daysLabel="D"
+        app:showDays="false"
         />
 
 </RelativeLayout>

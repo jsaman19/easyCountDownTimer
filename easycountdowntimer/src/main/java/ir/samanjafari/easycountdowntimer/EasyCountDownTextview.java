@@ -137,12 +137,6 @@ public class EasyCountDownTextview extends LinearLayout {
         if (size > 0)
             setTextSize(size);
 
-        setTextColor(color);
-        setColonColor(colonColor);
-        showOnlySecond(isOnlySecond);
-        setShowHours(showHours);
-        setShowDays(showDays);
-
         setAnimation(setAnim, context);
 
         if (digitBackgroundResource > 0)
@@ -154,6 +148,12 @@ public class EasyCountDownTextview extends LinearLayout {
             daysLbl.setText(daysLabel);
 
         setTime(days, hours, minute, second);
+
+        setTextColor(color);
+        setColonColor(colonColor);
+        showOnlySecond(isOnlySecond);
+        setShowHours(showHours);
+        setShowDays(showDays);
     }
 
     public void setTextColor(int color) {
