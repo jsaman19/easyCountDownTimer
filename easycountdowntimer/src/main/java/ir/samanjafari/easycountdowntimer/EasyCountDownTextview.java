@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-
 import java.util.Calendar;
 
 /**
@@ -35,7 +34,7 @@ public class EasyCountDownTextview extends LinearLayout {
     private CountDownInterface countDownInterface, newCountDownInterface;
     private int days, hours, minute, second;
     private MyCountDown myCountDown;
-    private boolean setAnim;
+    private boolean setAnim, startAutomatically;
 
     public EasyCountDownTextview(Context context) {
         this(context, null, 0);
@@ -99,6 +98,7 @@ public class EasyCountDownTextview extends LinearLayout {
             digitBackgroundColor = attr.getColor(R.styleable.EasyCountDownTextview_digitBackground, -1);
 
         setAnim = attr.getBoolean(R.styleable.EasyCountDownTextview_setAnimation, false);
+        startAutomatically = attr.getBoolean(R.styleable.EasyCountDownTextview_start_automatically, true);
         boolean isOnlySecond = attr.getBoolean(R.styleable.EasyCountDownTextview_showOnlySecond, false);
 
         if (!showHours) {
@@ -340,7 +340,8 @@ public class EasyCountDownTextview extends LinearLayout {
         this.minute = minute;
         this.second = second;
 
-        startTimer();
+        if (startAutomatically)
+            startTimer();
     }
 
     public void setAnimation(final boolean anim, final Context context) {

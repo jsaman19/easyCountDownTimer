@@ -18,6 +18,18 @@
         app:colonColor="#000"
         app:daysLabel="D"
         app:showDays="false"
+        app:minute="1"
+        app:second="30"
+        app:start_automatically="false"
         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:layout_below="@id/easyCountDownTextview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:onClick="startBtn_onClick"/>
 
 </RelativeLayout>

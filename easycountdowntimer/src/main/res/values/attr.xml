@@ -10,6 +10,7 @@
         <attr name="textSize" format="dimension" />
         <attr name="showHours" format="boolean" />
         <attr name="showDays" format="boolean" />
+        <attr name="start_automatically" format="boolean" />
         <attr name="colonColor" format="color"/>
         <attr name="digitBackground" format="reference|color"/>
         <attr name="setAnimation" format="boolean"/>
