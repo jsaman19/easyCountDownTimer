@@ -32,7 +32,7 @@ repositories {
 }
 
 dependencies {
-    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.2.1'
+    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.3.0'
 }
 ```
 
