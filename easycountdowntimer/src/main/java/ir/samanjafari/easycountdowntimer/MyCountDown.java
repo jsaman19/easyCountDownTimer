@@ -33,10 +33,19 @@ public class MyCountDown extends CountDownTimer {
 
     @Override
     public void onFinish() {
-        hrTxt.setText("0");
-        minTxt.setText("0");
-        scndTxt.setText("0");
-        dayTxt.setText("0");
+        int d = Integer.parseInt(dayTxt.getText().toString().trim());
+        int hr = Integer.parseInt(hrTxt.getText().toString().trim());
+        int min = Integer.parseInt(minTxt.getText().toString().trim());
+        int second = Integer.parseInt(scndTxt.getText().toString().trim());
+
+        if (hr > 0)
+            hrTxt.setText("00");
+        if (min > 0)
+            minTxt.setText("00");
+        if (second > 0)
+            scndTxt.setText("00");
+        if (d > 0)
+            dayTxt.setText("00");
         countDownInterface.onFinish();
     }
 
@@ -49,7 +58,7 @@ public class MyCountDown extends CountDownTimer {
 
         int d = Integer.parseInt(dayTxt.getText().toString().trim());
         int hr = Integer.parseInt(hrTxt.getText().toString().trim());
-        int min  = Integer.parseInt(minTxt.getText().toString().trim());
+        int min = Integer.parseInt(minTxt.getText().toString().trim());
 
 
         hours = 0;
@@ -61,12 +70,7 @@ public class MyCountDown extends CountDownTimer {
             hours = (int) ((time % dayMilSec) / hourMilSec);
             minute = (int) (((time % dayMilSec) % hourMilSec) / minMilSec);
             second = (int) ((((time % dayMilSec) % hourMilSec) % minMilSec) / secMilSec);
-
-            if(minute == 59 && second == 56)
-                Log.i("asd", "ads : " + (time / dayMilSec));
-
-        }
-        else if (time >= hourMilSec) {
+        } else if (time >= hourMilSec) {
             hours = (int) (time / hourMilSec);
             minute = (int) ((time % hourMilSec) / minMilSec);
             second = (int) (((time % hourMilSec) % minMilSec) / secMilSec);
@@ -77,7 +81,7 @@ public class MyCountDown extends CountDownTimer {
             second = (int) (time / secMilSec);
         }
 
-        if(d != days)
+        if (d != days)
             dayTxt.setText(String.valueOf(days).length() == 1 ? "0" + days : String.valueOf(days));
 
         if (hr != hours)

@@ -17,9 +17,11 @@
         app:setAnimation="true"
         app:colonColor="#000"
         app:daysLabel="D"
-        app:showDays="false"
+        app:showDays="true"
+        app:days="1"
+        app:hours="0"
         app:minute="1"
-        app:second="30"
+        app:second="8"
         app:start_automatically="false"
         />
     <Button

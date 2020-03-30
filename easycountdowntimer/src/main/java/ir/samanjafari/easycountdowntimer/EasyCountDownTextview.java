@@ -2,6 +2,7 @@ package ir.samanjafari.easycountdowntimer;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -23,6 +24,7 @@ import java.util.Calendar;
 
 public class EasyCountDownTextview extends LinearLayout {
 
+    private Context context;
     private TextView topHoursTxt, belowHoursTxt, hoursTxt,
             belowMinuteTxt, topMinuteTxt, minuteTxt,
             secondTxt, belowSecondTxt, topSecondTxt,
@@ -47,6 +49,7 @@ public class EasyCountDownTextview extends LinearLayout {
     public EasyCountDownTextview(final Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        this.context = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         assert inflater != null;
@@ -137,8 +140,6 @@ public class EasyCountDownTextview extends LinearLayout {
         if (size > 0)
             setTextSize(size);
 
-        setAnimation(setAnim, context);
-
         if (digitBackgroundResource > 0)
             setDigitBackgroundResource(digitBackgroundResource);
         else
@@ -147,13 +148,13 @@ public class EasyCountDownTextview extends LinearLayout {
         if (daysLabel != null)
             daysLbl.setText(daysLabel);
 
-        setTime(days, hours, minute, second);
-
         setTextColor(color);
         setColonColor(colonColor);
         showOnlySecond(isOnlySecond);
         setShowHours(showHours);
         setShowDays(showDays);
+
+        setTime(days, hours, minute, second);
     }
 
     public void setTextColor(int color) {
@@ -202,6 +203,7 @@ public class EasyCountDownTextview extends LinearLayout {
             if (setAnim) {
                 topHoursTxt.setVisibility(VISIBLE);
                 belowHoursTxt.setVisibility(VISIBLE);
+                hoursTxt.setVisibility(GONE);
             }
             colon1.setVisibility(VISIBLE);
         }
@@ -219,6 +221,7 @@ public class EasyCountDownTextview extends LinearLayout {
             if (setAnim) {
                 topDaysTxt.setVisibility(VISIBLE);
                 belowDaysTxt.setVisibility(VISIBLE);
+                daysTxt.setVisibility(GONE);
             }
             daysLbl.setVisibility(VISIBLE);
         }
@@ -246,8 +249,14 @@ public class EasyCountDownTextview extends LinearLayout {
         } else {
             hoursTxt.setVisibility(VISIBLE);
             minuteTxt.setVisibility(VISIBLE);
+            daysTxt.setVisibility(VISIBLE);
 
             if (setAnim) {
+
+                hoursTxt.setVisibility(GONE);
+                minuteTxt.setVisibility(GONE);
+                daysTxt.setVisibility(GONE);
+
                 topHoursTxt.setVisibility(VISIBLE);
                 belowHoursTxt.setVisibility(VISIBLE);
 
@@ -301,6 +310,8 @@ public class EasyCountDownTextview extends LinearLayout {
     public void startTimer() {
         stopTimer();
 
+        setTime(days, hours, minute, second);
+
         long secMilSec = 1000;
         long minMilSec = 60 * secMilSec;
         long hourMilSec = 60 * minMilSec;
@@ -340,135 +351,153 @@ public class EasyCountDownTextview extends LinearLayout {
         this.minute = minute;
         this.second = second;
 
+        daysTxt.removeTextChangedListener(daysTextWatcher);
+        hoursTxt.removeTextChangedListener(hoursTextWatcher);
+        minuteTxt.removeTextChangedListener(minutesTextWatcher);
+        secondTxt.removeTextChangedListener(secondsTextWatcher);
+
+        topDaysTxt.setText(String.valueOf(days).length() == 1 ? "0" + days : String.valueOf(days));
+        topHoursTxt.setText(String.valueOf(hours).length() == 1 ? "0" + hours : String.valueOf(hours));
+        topMinuteTxt.setText(String.valueOf(minute).length() == 1 ? "0" + minute : String.valueOf(minute));
+        topSecondTxt.setText(String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
+
+        belowDaysTxt.setText(String.valueOf(days).length() == 1 ? "0" + days : String.valueOf(days));
+        belowHoursTxt.setText(String.valueOf(hours).length() == 1 ? "0" + hours : String.valueOf(hours));
+        belowMinuteTxt.setText(String.valueOf(minute).length() == 1 ? "0" + minute : String.valueOf(minute));
+        belowSecondTxt.setText(String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
+
+        daysTxt.setText(String.valueOf(days).length() == 1 ? "0" + days : String.valueOf(days));
+        hoursTxt.setText(String.valueOf(hours).length() == 1 ? "0" + hours : String.valueOf(hours));
+        minuteTxt.setText(String.valueOf(minute).length() == 1 ? "0" + minute : String.valueOf(minute));
+        secondTxt.setText(String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
+
+        setAnimation(setAnim);
         if (startAutomatically)
             startTimer();
     }
 
-    public void setAnimation(final boolean anim, final Context context) {
+    TextWatcher daysTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        daysTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
 
-            }
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            int bottomDigit = Integer.parseInt(charSequence.toString());
+            int topDigit = bottomDigit + 1;
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            topDaysTxt.setText(String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
+            belowDaysTxt.setText(String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
 
-                if (anim) {
-                    int digit = Integer.parseInt(charSequence.toString());
-                    int newDigit = digit + 1;
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
+            Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
+            topDaysTxt.startAnimation(animation);
+            belowDaysTxt.startAnimation(animation1);
+        }
 
-                    topDaysTxt.setText(String.valueOf(newDigit).length() == 1 ? "0" + newDigit : String.valueOf(newDigit));
-                    belowDaysTxt.setText(String.valueOf(digit).length() == 1 ? "0" + digit : String.valueOf(digit));
+        @Override
+        public void afterTextChanged(Editable editable) {
 
-                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
-                    Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
-                    topDaysTxt.startAnimation(animation);
-                    belowDaysTxt.startAnimation(animation1);
-                }
-            }
+        }
+    };
 
-            @Override
-            public void afterTextChanged(Editable editable) {
+    TextWatcher hoursTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-        });
+        }
 
-        hoursTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            int bottomDigit = Integer.parseInt(charSequence.toString());
+            int topDigit = bottomDigit + 1;
 
-            }
+            if(topDigit > 23)
+                topDigit = 23;
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            topHoursTxt.setText(String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
+            belowHoursTxt.setText(String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
 
-                if (anim) {
-                    int digit = Integer.parseInt(charSequence.toString());
-                    int newDigit = 0;
-                    if (digit != 23)
-                        newDigit = digit + 1;
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
+            Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
+            topHoursTxt.startAnimation(animation);
+            belowHoursTxt.startAnimation(animation1);
+        }
 
-                    topHoursTxt.setText(String.valueOf(newDigit).length() == 1 ? "0" + newDigit : String.valueOf(newDigit));
-                    belowHoursTxt.setText(String.valueOf(digit).length() == 1 ? "0" + digit : String.valueOf(digit));
+        @Override
+        public void afterTextChanged(Editable editable) {
 
-                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
-                    Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
-                    topHoursTxt.startAnimation(animation);
-                    belowHoursTxt.startAnimation(animation1);
-                }
-            }
+        }
+    };
 
-            @Override
-            public void afterTextChanged(Editable editable) {
+    TextWatcher minutesTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-        });
+        }
 
-        secondTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            int bottomDigit = Integer.parseInt(charSequence.toString());
+            int topDigit = bottomDigit + 1;
 
-                if (anim) {
-                    int digit = Integer.parseInt(charSequence.toString());
-                    int newDigit = 0;
-                    if (digit != 59)
-                        newDigit = digit + 1;
+            if(topDigit > 59)
+                topDigit = 59;
 
-                    topSecondTxt.setText(String.valueOf(newDigit).length() == 1 ? "0" + newDigit : String.valueOf(newDigit));
-                    belowSecondTxt.setText(String.valueOf(digit).length() == 1 ? "0" + digit : String.valueOf(digit));
-
-                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
-                    Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
-                    topSecondTxt.startAnimation(animation);
-                    belowSecondTxt.startAnimation(animation1);
-                }
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-
-        minuteTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            topMinuteTxt.setText(String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
+            belowMinuteTxt.setText(String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
 
 
-            }
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
+            Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
+            topMinuteTxt.startAnimation(animation);
+            belowMinuteTxt.startAnimation(animation1);
+        }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (anim) {
-                    int digit = Integer.parseInt(charSequence.toString());
-                    int newDigit = 0;
-                    if (digit != 59)
-                        newDigit = digit + 1;
+        @Override
+        public void afterTextChanged(Editable editable) {
 
-                    topMinuteTxt.setText(String.valueOf(newDigit).length() == 1 ? "0" + newDigit : String.valueOf(newDigit));
-                    belowMinuteTxt.setText(String.valueOf(digit).length() == 1 ? "0" + digit : String.valueOf(digit));
+        }
+    };
 
+    TextWatcher secondsTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
-                    Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
-                    topMinuteTxt.startAnimation(animation);
-                    belowMinuteTxt.startAnimation(animation1);
-                }
-            }
+        }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            int topDigit = Integer.parseInt(charSequence.toString());
+            int bottomDigit = topDigit - 1;
+            if (bottomDigit < 0)
+                bottomDigit = 59;
 
-            }
-        });
+            topSecondTxt.setText(String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
+            belowSecondTxt.setText(String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
 
-        if (anim) {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
+            Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
+            topSecondTxt.startAnimation(animation);
+            belowSecondTxt.startAnimation(animation1);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    public void setAnimation(final boolean anim) {
+
+        if(anim)
+        {
+            daysTxt.addTextChangedListener(daysTextWatcher);
+            hoursTxt.addTextChangedListener(hoursTextWatcher);
+            minuteTxt.addTextChangedListener(minutesTextWatcher);
+            secondTxt.addTextChangedListener(secondsTextWatcher);
+
             daysTxt.setVisibility(GONE);
             hoursTxt.setVisibility(GONE);
             minuteTxt.setVisibility(GONE);
@@ -483,7 +512,14 @@ public class EasyCountDownTextview extends LinearLayout {
             belowHoursTxt.setVisibility(VISIBLE);
             belowMinuteTxt.setVisibility(VISIBLE);
             belowSecondTxt.setVisibility(VISIBLE);
-        } else {
+        }
+        else
+        {
+            daysTxt.removeTextChangedListener(daysTextWatcher);
+            hoursTxt.removeTextChangedListener(hoursTextWatcher);
+            minuteTxt.removeTextChangedListener(minutesTextWatcher);
+            secondTxt.removeTextChangedListener(secondsTextWatcher);
+
             daysTxt.setVisibility(VISIBLE);
             hoursTxt.setVisibility(VISIBLE);
             minuteTxt.setVisibility(VISIBLE);
