@@ -155,6 +155,8 @@ public class EasyCountDownTextview extends LinearLayout {
         setShowDays(showDays);
 
         setTime(days, hours, minute, second);
+        if(startAutomatically)
+            startTimer();
     }
 
     public void setTextColor(int color) {
@@ -372,8 +374,6 @@ public class EasyCountDownTextview extends LinearLayout {
         secondTxt.setText(String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
 
         setAnimation(setAnim);
-        if (startAutomatically)
-            startTimer();
     }
 
     TextWatcher daysTextWatcher = new TextWatcher() {
@@ -443,7 +443,7 @@ public class EasyCountDownTextview extends LinearLayout {
             int topDigit = bottomDigit + 1;
 
             if(topDigit > 59)
-                topDigit = 59;
+                topDigit = 0;
 
             topMinuteTxt.setText(String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
             belowMinuteTxt.setText(String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
@@ -469,10 +469,10 @@ public class EasyCountDownTextview extends LinearLayout {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            int topDigit = Integer.parseInt(charSequence.toString());
-            int bottomDigit = topDigit - 1;
-            if (bottomDigit < 0)
-                bottomDigit = 59;
+            int bottomDigit = Integer.parseInt(charSequence.toString());
+            int topDigit = bottomDigit + 1;
+            if (topDigit > 59)
+                topDigit = 0;
 
             topSecondTxt.setText(String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
             belowSecondTxt.setText(String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
