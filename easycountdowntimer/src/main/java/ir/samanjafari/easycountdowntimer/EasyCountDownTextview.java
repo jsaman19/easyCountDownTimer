@@ -36,7 +36,7 @@ public class EasyCountDownTextview extends LinearLayout {
     private CountDownInterface countDownInterface, newCountDownInterface;
     private int days, hours, minute, second;
     private MyCountDown myCountDown;
-    private boolean setAnim, startAutomatically;
+    private boolean setAnim, isOnlySecond, showDays, showHours;
 
     public EasyCountDownTextview(Context context) {
         this(context, null, 0);
@@ -89,8 +89,8 @@ public class EasyCountDownTextview extends LinearLayout {
 
         int size = attr.getDimensionPixelSize(R.styleable.EasyCountDownTextview_textSize, 0);
 
-        boolean showDays = attr.getBoolean(R.styleable.EasyCountDownTextview_showDays, true);
-        boolean showHours = attr.getBoolean(R.styleable.EasyCountDownTextview_showHours, true);
+        showDays = attr.getBoolean(R.styleable.EasyCountDownTextview_showDays, true);
+        showHours = attr.getBoolean(R.styleable.EasyCountDownTextview_showHours, true);
 
         String daysLabel = attr.getString(R.styleable.EasyCountDownTextview_daysLabel);
 
@@ -101,8 +101,8 @@ public class EasyCountDownTextview extends LinearLayout {
             digitBackgroundColor = attr.getColor(R.styleable.EasyCountDownTextview_digitBackground, -1);
 
         setAnim = attr.getBoolean(R.styleable.EasyCountDownTextview_setAnimation, false);
-        startAutomatically = attr.getBoolean(R.styleable.EasyCountDownTextview_start_automatically, true);
-        boolean isOnlySecond = attr.getBoolean(R.styleable.EasyCountDownTextview_showOnlySecond, false);
+        boolean startAutomatically = attr.getBoolean(R.styleable.EasyCountDownTextview_start_automatically, true);
+        isOnlySecond = attr.getBoolean(R.styleable.EasyCountDownTextview_showOnlySecond, false);
 
         if (!showHours) {
             showDays = false;
@@ -493,46 +493,58 @@ public class EasyCountDownTextview extends LinearLayout {
 
         if(anim)
         {
-            daysTxt.addTextChangedListener(daysTextWatcher);
-            hoursTxt.addTextChangedListener(hoursTextWatcher);
-            minuteTxt.addTextChangedListener(minutesTextWatcher);
+            if(showDays)
+            {
+                daysTxt.addTextChangedListener(daysTextWatcher);
+                daysTxt.setVisibility(GONE);
+                topDaysTxt.setVisibility(VISIBLE);
+                belowDaysTxt.setVisibility(VISIBLE);
+            }
+            if(showHours)
+            {
+                hoursTxt.addTextChangedListener(hoursTextWatcher);
+                hoursTxt.setVisibility(GONE);
+                topHoursTxt.setVisibility(VISIBLE);
+                belowHoursTxt.setVisibility(VISIBLE);
+            }
+            if(!isOnlySecond)
+            {
+                minuteTxt.addTextChangedListener(minutesTextWatcher);
+                minuteTxt.setVisibility(GONE);
+                topMinuteTxt.setVisibility(VISIBLE);
+                belowMinuteTxt.setVisibility(VISIBLE);
+            }
             secondTxt.addTextChangedListener(secondsTextWatcher);
-
-            daysTxt.setVisibility(GONE);
-            hoursTxt.setVisibility(GONE);
-            minuteTxt.setVisibility(GONE);
             secondTxt.setVisibility(GONE);
-
-            topDaysTxt.setVisibility(VISIBLE);
-            topHoursTxt.setVisibility(VISIBLE);
-            topMinuteTxt.setVisibility(VISIBLE);
             topSecondTxt.setVisibility(VISIBLE);
-
-            belowDaysTxt.setVisibility(VISIBLE);
-            belowHoursTxt.setVisibility(VISIBLE);
-            belowMinuteTxt.setVisibility(VISIBLE);
             belowSecondTxt.setVisibility(VISIBLE);
         }
         else
         {
-            daysTxt.removeTextChangedListener(daysTextWatcher);
-            hoursTxt.removeTextChangedListener(hoursTextWatcher);
-            minuteTxt.removeTextChangedListener(minutesTextWatcher);
+            if(showDays)
+            {
+                daysTxt.removeTextChangedListener(daysTextWatcher);
+                daysTxt.setVisibility(VISIBLE);
+                topDaysTxt.setVisibility(GONE);
+                belowDaysTxt.setVisibility(GONE);
+            }
+            if(showHours)
+            {
+                hoursTxt.removeTextChangedListener(hoursTextWatcher);
+                hoursTxt.setVisibility(VISIBLE);
+                topHoursTxt.setVisibility(GONE);
+                belowHoursTxt.setVisibility(GONE);
+            }
+            if(!isOnlySecond)
+            {
+                minuteTxt.removeTextChangedListener(minutesTextWatcher);
+                minuteTxt.setVisibility(VISIBLE);
+                topMinuteTxt.setVisibility(GONE);
+                belowMinuteTxt.setVisibility(GONE);
+            }
             secondTxt.removeTextChangedListener(secondsTextWatcher);
-
-            daysTxt.setVisibility(VISIBLE);
-            hoursTxt.setVisibility(VISIBLE);
-            minuteTxt.setVisibility(VISIBLE);
             secondTxt.setVisibility(VISIBLE);
-
-            topDaysTxt.setVisibility(GONE);
-            topHoursTxt.setVisibility(GONE);
-            topMinuteTxt.setVisibility(GONE);
             topSecondTxt.setVisibility(GONE);
-
-            belowDaysTxt.setVisibility(GONE);
-            belowHoursTxt.setVisibility(GONE);
-            belowMinuteTxt.setVisibility(GONE);
             belowSecondTxt.setVisibility(GONE);
         }
     }

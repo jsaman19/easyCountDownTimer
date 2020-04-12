@@ -14,14 +14,16 @@
         app:textSize="12sp"
         app:digitBackground="@android:color/transparent"
         app:textColor="#9c9c9c"
-        app:setAnimation="true"
+        app:setAnimation="false"
         app:colonColor="#000"
         app:daysLabel="D"
         app:showDays="true"
+        app:showHours="false"
         app:days="0"
         app:hours="1"
         app:minute="1"
         app:second="8"
+        app:showOnlySecond="true"
         app:start_automatically="false"
         />
     <Button
