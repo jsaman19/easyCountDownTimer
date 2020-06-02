@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -176,21 +177,21 @@ public class EasyCountDownTextview extends LinearLayout {
     }
 
     public void setTextSize(int size) {
-        daysTxt.setTextSize(size);
-        topDaysTxt.setTextSize(size);
-        belowDaysTxt.setTextSize(size);
-        hoursTxt.setTextSize(size);
-        topHoursTxt.setTextSize(size);
-        belowHoursTxt.setTextSize(size);
-        minuteTxt.setTextSize(size);
-        topMinuteTxt.setTextSize(size);
-        belowMinuteTxt.setTextSize(size);
-        secondTxt.setTextSize(size);
-        topSecondTxt.setTextSize(size);
-        belowSecondTxt.setTextSize(size);
-        colon1.setTextSize(size);
-        colon2.setTextSize(size);
-        daysLbl.setTextSize(size);
+        daysTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        topDaysTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        belowDaysTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        hoursTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        topHoursTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        belowHoursTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        minuteTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        topMinuteTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        belowMinuteTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        secondTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        topSecondTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        belowSecondTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        colon1.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        colon2.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        daysLbl.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
     }
 
     public void setShowHours(boolean show) {

@@ -45,11 +45,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:text="Days"/>
-
-    <View
-        android:layout_width="10dp"
-        android:layout_height="1dp"/>
+        android:text="Days"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"/>
 
     <RelativeLayout
         android:id="@+id/hours_layout"
