@@ -16,6 +16,7 @@
         <attr name="setAnimation" format="boolean"/>
         <attr name="showOnlySecond" format="boolean"/>
         <attr name="daysLabel" format="string"/>
+        <attr name="useFarsiNumeral" format="boolean"/>
     </declare-styleable>
 
 </resources>

@@ -17,7 +17,7 @@ The simplest way to use easyCountDownTimer is to add the library as aar dependen
 <dependency>
   <groupId>ir.samanjafari.easycountdowntimer</groupId>
   <artifactId>easycountdowntimer</artifactId>
-  <version>2.3.3</version>
+  <version>2.4.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -32,7 +32,7 @@ repositories {
 }
 
 dependencies {
-    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.3.3'
+    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.4.0'
 }
 ```
 
@@ -59,6 +59,7 @@ Add the following code to your view
         app:daysLabel="D"
         app:days="1"
         app:start_automatically="false"
+        app:useFarsiNumeral="true"
         />
 ```
 
@@ -84,6 +85,13 @@ how to set time programmatically ?
 ```java
 EasyCountDownTextview easyCountDownTextview = (EasyCountDownTextview) findViewById(R.id.easyCountDownTextview);
 easyCountDownTextview.setTime(1,1, 30, 15);// setTime(days, hours, minute, second)
+```
+
+how to set custom font
+
+```java
+Typeface typeface = ResourcesCompat.getFont(this, R.font.my_font);
+easyCountDownTextview.setTypeFace(typeface);
 ```
 
 ## Licence

@@ -2,11 +2,10 @@ package ir.samanjafari.easycountdowntimer;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -14,8 +13,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
 import java.util.Calendar;
 
 /**
@@ -31,6 +28,7 @@ public class EasyCountDownTextview extends LinearLayout {
             colon1, colon2,
             topDaysTxt, belowDaysTxt, daysTxt,
             daysLbl;
+    private boolean useFarsiNumeral;
 
     private RelativeLayout hrLayout, minLayout, secLayout, daysLayout;
     private CountDownInterface countDownInterface, newCountDownInterface;
@@ -79,6 +77,7 @@ public class EasyCountDownTextview extends LinearLayout {
 
         TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.EasyCountDownTextview, 0, 0);
 
+        useFarsiNumeral = attr.getBoolean(R.styleable.EasyCountDownTextview_useFarsiNumeral, false);
         int days = attr.getInteger(R.styleable.EasyCountDownTextview_days, 0);
         int hours = attr.getInteger(R.styleable.EasyCountDownTextview_hours, 0);
         int minute = attr.getInteger(R.styleable.EasyCountDownTextview_minute, 0);
@@ -146,7 +145,7 @@ public class EasyCountDownTextview extends LinearLayout {
             setDigitBackgroundColor(digitBackgroundColor);
 
         if (daysLabel != null)
-            daysLbl.setText(daysLabel);
+            setFarsiNumberText(daysLbl, daysLabel);
 
         setTextColor(color);
         setColonColor(colonColor);
@@ -155,7 +154,7 @@ public class EasyCountDownTextview extends LinearLayout {
         setShowDays(showDays);
 
         setTime(days, hours, minute, second);
-        if(startAutomatically)
+        if (startAutomatically)
             startTimer();
     }
 
@@ -335,9 +334,40 @@ public class EasyCountDownTextview extends LinearLayout {
         if (millisin > 0) {
             myCountDown = new MyCountDown(millisin, 1000,
                     daysTxt, hoursTxt, minuteTxt, secondTxt,
-                    countDownInterface);
+                    countDownInterface, useFarsiNumeral);
             myCountDown.start();
         }
+    }
+
+    public void startTimer(Calendar expireTime)
+    {
+        Calendar nowCalendar = Calendar.getInstance();
+        long diff = expireTime.getTimeInMillis() - nowCalendar.getTimeInMillis();
+
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long elapsedDays = diff / daysInMilli;
+        diff = diff % daysInMilli;
+
+        long elapsedHours = diff / hoursInMilli;
+        diff = diff % hoursInMilli;
+
+        long elapsedMinutes = diff / minutesInMilli;
+        diff = diff % minutesInMilli;
+
+        long elapsedSeconds = diff / secondsInMilli;
+
+        days = (int) elapsedDays;
+        hours = (int) elapsedHours;
+        minute = (int) elapsedMinutes;
+        second = (int) elapsedSeconds;
+
+        setTime(days, hours, minute, second);
+
+        startTimer();
     }
 
     public void stopTimer() {
@@ -358,20 +388,20 @@ public class EasyCountDownTextview extends LinearLayout {
         minuteTxt.removeTextChangedListener(minutesTextWatcher);
         secondTxt.removeTextChangedListener(secondsTextWatcher);
 
-        topDaysTxt.setText(String.valueOf(days).length() == 1 ? "0" + days : String.valueOf(days));
-        topHoursTxt.setText(String.valueOf(hours).length() == 1 ? "0" + hours : String.valueOf(hours));
-        topMinuteTxt.setText(String.valueOf(minute).length() == 1 ? "0" + minute : String.valueOf(minute));
-        topSecondTxt.setText(String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
+        setFarsiNumberText(topDaysTxt, String.valueOf(days).length() == 1 ? "0" + days : String.valueOf(days));
+        setFarsiNumberText(topHoursTxt, String.valueOf(hours).length() == 1 ? "0" + hours : String.valueOf(hours));
+        setFarsiNumberText(topMinuteTxt, String.valueOf(minute).length() == 1 ? "0" + minute : String.valueOf(minute));
+        setFarsiNumberText(topSecondTxt, String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
 
-        belowDaysTxt.setText(String.valueOf(days).length() == 1 ? "0" + days : String.valueOf(days));
-        belowHoursTxt.setText(String.valueOf(hours).length() == 1 ? "0" + hours : String.valueOf(hours));
-        belowMinuteTxt.setText(String.valueOf(minute).length() == 1 ? "0" + minute : String.valueOf(minute));
-        belowSecondTxt.setText(String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
+        setFarsiNumberText(belowDaysTxt, String.valueOf(days).length() == 1 ? "0" + days : String.valueOf(days));
+        setFarsiNumberText(belowHoursTxt, String.valueOf(hours).length() == 1 ? "0" + hours : String.valueOf(hours));
+        setFarsiNumberText(belowMinuteTxt, String.valueOf(minute).length() == 1 ? "0" + minute : String.valueOf(minute));
+        setFarsiNumberText(belowSecondTxt, String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
 
-        daysTxt.setText(String.valueOf(days).length() == 1 ? "0" + days : String.valueOf(days));
-        hoursTxt.setText(String.valueOf(hours).length() == 1 ? "0" + hours : String.valueOf(hours));
-        minuteTxt.setText(String.valueOf(minute).length() == 1 ? "0" + minute : String.valueOf(minute));
-        secondTxt.setText(String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
+        setFarsiNumberText(daysTxt, String.valueOf(days).length() == 1 ? "0" + days : String.valueOf(days));
+        setFarsiNumberText(hoursTxt, String.valueOf(hours).length() == 1 ? "0" + hours : String.valueOf(hours));
+        setFarsiNumberText(minuteTxt, String.valueOf(minute).length() == 1 ? "0" + minute : String.valueOf(minute));
+        setFarsiNumberText(secondTxt, String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
 
         setAnimation(setAnim);
     }
@@ -384,11 +414,11 @@ public class EasyCountDownTextview extends LinearLayout {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            int bottomDigit = Integer.parseInt(charSequence.toString());
+            int bottomDigit = Integer.parseInt(FarsiNumber.convertToDecimal(charSequence.toString()));
             int topDigit = bottomDigit + 1;
 
-            topDaysTxt.setText(String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
-            belowDaysTxt.setText(String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
+            setFarsiNumberText(topDaysTxt, String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
+            setFarsiNumberText(belowDaysTxt, String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
 
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
             Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
@@ -410,14 +440,14 @@ public class EasyCountDownTextview extends LinearLayout {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            int bottomDigit = Integer.parseInt(charSequence.toString());
+            int bottomDigit = Integer.parseInt(FarsiNumber.convertToDecimal(charSequence.toString()));
             int topDigit = bottomDigit + 1;
 
-            if(topDigit > 23)
+            if (topDigit > 23)
                 topDigit = 23;
 
-            topHoursTxt.setText(String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
-            belowHoursTxt.setText(String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
+            setFarsiNumberText(topHoursTxt, String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
+            setFarsiNumberText(belowHoursTxt, String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
 
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
             Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
@@ -439,15 +469,14 @@ public class EasyCountDownTextview extends LinearLayout {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            int bottomDigit = Integer.parseInt(charSequence.toString());
+            int bottomDigit = Integer.parseInt(FarsiNumber.convertToDecimal(charSequence.toString()));
             int topDigit = bottomDigit + 1;
 
-            if(topDigit > 59)
+            if (topDigit > 59)
                 topDigit = 0;
 
-            topMinuteTxt.setText(String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
-            belowMinuteTxt.setText(String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
-
+            setFarsiNumberText(topMinuteTxt, String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
+            setFarsiNumberText(belowMinuteTxt, String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
 
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
             Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
@@ -469,13 +498,13 @@ public class EasyCountDownTextview extends LinearLayout {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            int bottomDigit = Integer.parseInt(charSequence.toString());
+            int bottomDigit = Integer.parseInt(FarsiNumber.convertToDecimal(charSequence.toString()));
             int topDigit = bottomDigit + 1;
             if (topDigit > 59)
                 topDigit = 0;
 
-            topSecondTxt.setText(String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
-            belowSecondTxt.setText(String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
+            setFarsiNumberText(topSecondTxt, String.valueOf(topDigit).length() == 1 ? "0" + topDigit : String.valueOf(topDigit));
+            setFarsiNumberText(belowSecondTxt, String.valueOf(bottomDigit).length() == 1 ? "0" + bottomDigit : String.valueOf(bottomDigit));
 
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.push_up_out);
             Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.push_up_in);
@@ -491,24 +520,20 @@ public class EasyCountDownTextview extends LinearLayout {
 
     public void setAnimation(final boolean anim) {
 
-        if(anim)
-        {
-            if(showDays)
-            {
+        if (anim) {
+            if (showDays) {
                 daysTxt.addTextChangedListener(daysTextWatcher);
                 daysTxt.setVisibility(GONE);
                 topDaysTxt.setVisibility(VISIBLE);
                 belowDaysTxt.setVisibility(VISIBLE);
             }
-            if(showHours)
-            {
+            if (showHours) {
                 hoursTxt.addTextChangedListener(hoursTextWatcher);
                 hoursTxt.setVisibility(GONE);
                 topHoursTxt.setVisibility(VISIBLE);
                 belowHoursTxt.setVisibility(VISIBLE);
             }
-            if(!isOnlySecond)
-            {
+            if (!isOnlySecond) {
                 minuteTxt.addTextChangedListener(minutesTextWatcher);
                 minuteTxt.setVisibility(GONE);
                 topMinuteTxt.setVisibility(VISIBLE);
@@ -518,25 +543,20 @@ public class EasyCountDownTextview extends LinearLayout {
             secondTxt.setVisibility(GONE);
             topSecondTxt.setVisibility(VISIBLE);
             belowSecondTxt.setVisibility(VISIBLE);
-        }
-        else
-        {
-            if(showDays)
-            {
+        } else {
+            if (showDays) {
                 daysTxt.removeTextChangedListener(daysTextWatcher);
                 daysTxt.setVisibility(VISIBLE);
                 topDaysTxt.setVisibility(GONE);
                 belowDaysTxt.setVisibility(GONE);
             }
-            if(showHours)
-            {
+            if (showHours) {
                 hoursTxt.removeTextChangedListener(hoursTextWatcher);
                 hoursTxt.setVisibility(VISIBLE);
                 topHoursTxt.setVisibility(GONE);
                 belowHoursTxt.setVisibility(GONE);
             }
-            if(!isOnlySecond)
-            {
+            if (!isOnlySecond) {
                 minuteTxt.removeTextChangedListener(minutesTextWatcher);
                 minuteTxt.setVisibility(VISIBLE);
                 topMinuteTxt.setVisibility(GONE);
@@ -548,4 +568,35 @@ public class EasyCountDownTextview extends LinearLayout {
             belowSecondTxt.setVisibility(GONE);
         }
     }
+
+    public void setTypeFace(Typeface typeFace) {
+        try {
+            secondTxt.setTypeface(typeFace);
+            minuteTxt.setTypeface(typeFace);
+            hoursTxt.setTypeface(typeFace);
+            daysTxt.setTypeface(typeFace);
+            belowSecondTxt.setTypeface(typeFace);
+            belowMinuteTxt.setTypeface(typeFace);
+            belowHoursTxt.setTypeface(typeFace);
+            belowDaysTxt.setTypeface(typeFace);
+            topSecondTxt.setTypeface(typeFace);
+            topMinuteTxt.setTypeface(typeFace);
+            topHoursTxt.setTypeface(typeFace);
+            topDaysTxt.setTypeface(typeFace);
+            daysLbl.setTypeface(typeFace);
+            colon1.setTypeface(typeFace);
+            colon2.setTypeface(typeFace);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setFarsiNumberText(TextView textView, String s) {
+        if (useFarsiNumeral)
+            textView.setText(FarsiNumber.convertToFarsi(s));
+        else
+            textView.setText(s);
+    }
+
+
 }

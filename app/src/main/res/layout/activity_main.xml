@@ -14,17 +14,18 @@
         app:textSize="12sp"
         app:digitBackground="@android:color/transparent"
         app:textColor="#9c9c9c"
-        app:setAnimation="false"
+        app:setAnimation="true"
         app:colonColor="#000"
         app:daysLabel="D"
         app:showDays="true"
-        app:showHours="false"
+        app:showHours="true"
         app:days="0"
         app:hours="1"
         app:minute="1"
         app:second="8"
-        app:showOnlySecond="true"
+        app:showOnlySecond="false"
         app:start_automatically="false"
+        app:useFarsiNumeral="true"
         />
     <Button
         android:layout_width="wrap_content"
@@ -33,6 +34,7 @@
         android:layout_below="@id/easyCountDownTextview"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:onClick="startBtn_onClick"/>
+        android:onClick="startBtn_onClick"
+        android:fontFamily="@font/iranyekanmediumfanum"/>
 
 </RelativeLayout>

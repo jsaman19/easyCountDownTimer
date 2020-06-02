@@ -13,16 +13,18 @@ public class MyCountDown extends CountDownTimer {
 
     private TextView dayTxt, hrTxt, minTxt, scndTxt;
     private CountDownInterface countDownInterface;
+    private boolean useFarsiNumeral;
 
     public MyCountDown(long millisInFuture, long countDownInterval,
                        TextView dayTxt, TextView hrTxt, TextView minTxt,
-                       TextView scndTxt, CountDownInterface countDownInterface) {
+                       TextView scndTxt, CountDownInterface countDownInterface, boolean useFarsiNumeral) {
         super(millisInFuture, countDownInterval);
         this.dayTxt = dayTxt;
         this.hrTxt = hrTxt;
         this.minTxt = minTxt;
         this.scndTxt = scndTxt;
         this.countDownInterface = countDownInterface;
+        this.useFarsiNumeral = useFarsiNumeral;
     }
 
     @Override
@@ -33,19 +35,20 @@ public class MyCountDown extends CountDownTimer {
 
     @Override
     public void onFinish() {
-        int d = Integer.parseInt(dayTxt.getText().toString().trim());
-        int hr = Integer.parseInt(hrTxt.getText().toString().trim());
-        int min = Integer.parseInt(minTxt.getText().toString().trim());
-        int second = Integer.parseInt(scndTxt.getText().toString().trim());
+        int d = Integer.parseInt(FarsiNumber.convertToDecimal(dayTxt.getText().toString().trim()));
+        int hr = Integer.parseInt(FarsiNumber.convertToDecimal(hrTxt.getText().toString().trim()));
+        int min = Integer.parseInt(FarsiNumber.convertToDecimal(minTxt.getText().toString().trim()));
+        int second = Integer.parseInt(FarsiNumber.convertToDecimal(scndTxt.getText().toString().trim()));
 
         if (hr > 0)
-            hrTxt.setText("00");
+            setFarsiNumberText(hrTxt, "00");
         if (min > 0)
-            minTxt.setText("00");
+            setFarsiNumberText(minTxt, "00");
         if (second > 0)
-            scndTxt.setText("00");
+            setFarsiNumberText(scndTxt, "00");
         if (d > 0)
-            dayTxt.setText("00");
+            setFarsiNumberText(dayTxt, "00");
+
         countDownInterface.onFinish();
     }
 
@@ -82,14 +85,19 @@ public class MyCountDown extends CountDownTimer {
         }
 
         if (d != days)
-            dayTxt.setText(String.valueOf(days).length() == 1 ? "0" + days : String.valueOf(days));
-
+            setFarsiNumberText(dayTxt, String.valueOf(days).length() == 1 ? "0" + days : String.valueOf(days));
         if (hr != hours)
-            hrTxt.setText(String.valueOf(hours).length() == 1 ? "0" + hours : String.valueOf(hours));
-
+            setFarsiNumberText(hrTxt, String.valueOf(hours).length() == 1 ? "0" + hours : String.valueOf(hours));
         if (min != minute)
-            minTxt.setText(String.valueOf(minute).length() == 1 ? "0" + minute : String.valueOf(minute));
+            setFarsiNumberText(minTxt, String.valueOf(minute).length() == 1 ? "0" + minute : String.valueOf(minute));
 
-        scndTxt.setText(String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
+        setFarsiNumberText(scndTxt, String.valueOf(second).length() == 1 ? "0" + second : String.valueOf(second));
+    }
+
+    private void setFarsiNumberText(TextView textView, String s) {
+        if (useFarsiNumeral)
+            textView.setText(FarsiNumber.convertToFarsi(s));
+        else
+            textView.setText(s);
     }
 }
