@@ -1,6 +1,5 @@
 package ir.samanjafari.easycountdowntimer;
 
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.TextView;
 
