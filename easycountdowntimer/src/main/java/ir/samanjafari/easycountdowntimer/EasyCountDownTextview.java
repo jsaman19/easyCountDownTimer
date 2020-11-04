@@ -309,6 +309,14 @@ public class EasyCountDownTextview extends LinearLayout {
         this.newCountDownInterface = countDownInterface;
     }
 
+    public void pause(){
+        myCountDown.pause();
+    }
+
+    public void resume(){
+        myCountDown.resume();
+    }
+
     public void startTimer() {
         stopTimer();
 

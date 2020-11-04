@@ -32,4 +32,14 @@ public class MainActivity extends AppCompatActivity {
     {
         easyCountDownTextview.startTimer();
     }
+
+    public void pauseBtn_onClick(View view)
+    {
+        easyCountDownTextview.pause();
+    }
+
+    public void resumeBtn_onClick(View view)
+    {
+        easyCountDownTextview.resume();
+    }
 }

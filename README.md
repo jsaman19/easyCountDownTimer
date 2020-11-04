@@ -17,7 +17,7 @@ The simplest way to use easyCountDownTimer is to add the library as aar dependen
 <dependency>
   <groupId>ir.samanjafari.easycountdowntimer</groupId>
   <artifactId>easycountdowntimer</artifactId>
-  <version>2.4.1</version>
+  <version>2.5.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -32,7 +32,7 @@ repositories {
 }
 
 dependencies {
-    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.4.1'
+    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.5.0'
 }
 ```
 
@@ -92,6 +92,14 @@ how to set custom font
 ```java
 Typeface typeface = ResourcesCompat.getFont(this, R.font.my_font);
 easyCountDownTextview.setTypeFace(typeface);
+```
+
+how to pause and resume timer
+
+```java
+easyCountDownTextview.pause();
+
+easyCountDownTextview.resume();
 ```
 
 ## Licence

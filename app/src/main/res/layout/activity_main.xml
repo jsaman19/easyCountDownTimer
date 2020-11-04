@@ -28,6 +28,7 @@
         app:useFarsiNumeral="true"
         />
     <Button
+        android:id="@+id/start_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start"
@@ -35,6 +36,28 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:onClick="startBtn_onClick"
+        android:fontFamily="@font/iranyekanmediumfanum"/>
+
+    <Button
+        android:id="@+id/pause_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pause"
+        android:layout_below="@id/start_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:onClick="pauseBtn_onClick"
+        android:fontFamily="@font/iranyekanmediumfanum"/>
+
+    <Button
+        android:id="@+id/resume_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resume"
+        android:layout_below="@id/pause_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:onClick="resumeBtn_onClick"
         android:fontFamily="@font/iranyekanmediumfanum"/>
 
 </RelativeLayout>
