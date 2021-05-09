@@ -18,21 +18,34 @@ The simplest way to use easyCountDownTimer is to add the library as aar dependen
   <groupId>ir.samanjafari.easycountdowntimer</groupId>
   <artifactId>easycountdowntimer</artifactId>
   <version>2.5.0</version>
-  <type>pom</type>
+  <type>aar</type>
 </dependency>
 ```
 
 #### Gradle
 
 ```
-repositories {
-    maven {
-             url 'https://dl.bintray.com/samanjafaridotir/easyCountDownTimerTextview'
-          }
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral() // Add this Line
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.1.3"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral() // Add this line
+    }
 }
 
 dependencies {
-    compile 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.5.0'
+    implementation 'ir.samanjafari.easycountdowntimer:easycountdowntimer:2.5.0'
 }
 ```
 
